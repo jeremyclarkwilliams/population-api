@@ -7,7 +7,7 @@ class Zip < ApplicationRecord
     def self.my_import(file)
 
         zips = []
-        CSV.foreach(file.path, headers: true, header_converters: [:downcase, :symbol]) do |row|
+        CSV.foreach(file.path, headers: true, header_converters: [:downcase, :symbol], encoding: 'ISO-8859-1') do |row|
             zip_hash = row.to_hash
             zips << Zip.new({
                 zip: zip_hash[:zip],
@@ -15,6 +15,7 @@ class Zip < ApplicationRecord
             })
         end
         Zip.import zips
+        
     end
 
 end
