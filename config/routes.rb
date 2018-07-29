@@ -1,9 +1,27 @@
 PopulationApi::Application.routes.draw do
 
-    # Api definition
-    namespace :api, defaults: { format: :json },
-                    path: '/api/'  do
-      # We are going to list our resources here
+    root to: 'cbsas#index'
+
+    get 'population/index'
+
+    get 'zips/index'
+    get 'zips/import' => 'zips#my_import'
+
+    get 'cbsas/index'
+    get 'cbsas/import' => 'cbsas#my_import'
+
+    resources :zips do
+        collection {post :import}
     end
+
+    resources :cbsas do
+        collection {post :import}
+    end
+
+    # Api definition
+    # namespace :api, defaults: { format: :json },
+    #                 path: '/api/'  do
+    #     resources :zip
+    # end
 
 end

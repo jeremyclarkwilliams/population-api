@@ -1,0 +1,24 @@
+<%= flash[:notice] %>
+<div>
+    <h4>Import data</h4>
+    <%= form_tag import_zips_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import from file" %>
+    <% end %>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>ZIP</th>
+            <th>CBSA</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @zips.each do |zip| %>
+        <tr>
+            <td><%= zip.zip %></td>
+            <td><%= zip.cbsa %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+<%= flash[:notice] %>
+<div>
+    <h4>Import data</h4>
+    <%= form_tag import_cbsas_path, multipart: true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "Import from file" %>
+    <% end %>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>CBSA</th>
+            <th>NAME</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @cbsas.each do |cbsa| %>
+        <tr>
+            <td><%= cbsa.cbsa %></td>
+            <td><%= cbsa.name %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
