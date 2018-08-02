@@ -1,29 +1,24 @@
 class PopulationController < ApplicationController
 
     def index
-
-        # render file:
-        # 'vendor/zip_to_cbsa.csv'
-
-        require 'csv'
-
-        zips = []
-        CSV.foreach('vendor/zip_to_cbsa.csv', headers: true, header_converters: [:downcase, :symbol]) do |row|
-            zip_hash = row.to_hash
-            zips << Zip.new({zip: zip_hash[:zip], cbsa: zip_hash[:cbsa]})
-        end
-        Zip.import zips
-
+        @zips = Zip.all
+        @cbsas = Cbsa.all
     end
 
-    def getCsv
+    def get_csv
+        zip_file = File.new('vendor/zip_to_cbsa.csv')
+        cbsa_file = File.new('vendor/cbsa_to_msa.csv')
 
-        require 'csv'
+        Zip.my_import(zip_file)
+        Cbsa.my_import(cbsa_file)
+        redirect_to action: 'index'
+    end
 
-        CSV.foreach('https://s3.amazonaws.com/peerstreet-static/engineering/zip_to_msa/zip_to_cbsa.csv', :headers => true) do |row|
-            Moulding.create!(row.to_hash)
-        end
+    def get_pop
+        zips = Zip.all
+        cbsas = Cbsa.all
 
+        redirect_to action: 'index', @data => zips
     end
 
 end

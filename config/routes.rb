@@ -1,8 +1,10 @@
 PopulationApi::Application.routes.draw do
 
-    root to: 'cbsas#index'
+    root to: 'population#get_csv'
 
     get 'population/index'
+    get 'population/get_csv'
+    get 'population/get_pop'
 
     get 'zips/index'
     get 'zips/import' => 'zips#my_import'
